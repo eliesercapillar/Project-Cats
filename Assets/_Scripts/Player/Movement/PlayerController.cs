@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Managers;
 
 namespace Player
 {
@@ -9,7 +10,7 @@ namespace Player
     {
         [Header("Components")]
         [SerializeField] private Rigidbody _rb;
-        
+
         [Header("Movement Properties")]
         [SerializeField] private float _walkSpeed = 5;
         [SerializeField] private float _sprintSpeed = 10;
@@ -27,7 +28,7 @@ namespace Player
 
         private void Start()
         {
-            // Subscribe to events
+            // Subscribe to Gameplay Events
             InputManager.Instance.InputReader.Event_Move            += HandleMove;
             InputManager.Instance.InputReader.Event_Jump            += HandleJump;
             InputManager.Instance.InputReader.Event_JumpCancelled   += HandleJumpCancelled;

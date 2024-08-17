@@ -48,13 +48,13 @@ public class InputReader : ScriptableObject, InputMappings.IGameplayActions, Inp
     public void OnJump(InputAction.CallbackContext context) 
     {
         if (context.phase == InputActionPhase.Performed) Event_Jump?.Invoke();
-        if (context.phase == InputActionPhase.Canceled) Event_JumpCancelled.Invoke();
+        if (context.phase == InputActionPhase.Canceled) Event_JumpCancelled?.Invoke();
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed) Event_Sprint?.Invoke();
-        if (context.phase == InputActionPhase.Canceled) Event_SprintCancelled.Invoke();
+        if (context.phase == InputActionPhase.Canceled) Event_SprintCancelled?.Invoke();
     }
 
     #endregion Gameplay

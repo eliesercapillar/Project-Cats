@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Player
 {
@@ -10,10 +9,7 @@ namespace Player
     {
         [Header("Components")]
         [SerializeField] private Rigidbody _rb;
-
-        [Header("Scriptable Object Dependencies")]
-        [SerializeField] private InputReader _inputReader;
-
+        
         [Header("Movement Properties")]
         [SerializeField] private float _walkSpeed = 5;
         [SerializeField] private float _sprintSpeed = 10;
@@ -32,11 +28,11 @@ namespace Player
         private void Start()
         {
             // Subscribe to events
-            _inputReader.Event_Move            += HandleMove;
-            _inputReader.Event_Jump            += HandleJump;
-            _inputReader.Event_JumpCancelled   += HandleJumpCancelled;
-            _inputReader.Event_Sprint          += HandleSprint;
-            _inputReader.Event_SprintCancelled += HandleSprintCancelled;
+            InputManager.Instance.InputReader.Event_Move            += HandleMove;
+            InputManager.Instance.InputReader.Event_Jump            += HandleJump;
+            InputManager.Instance.InputReader.Event_JumpCancelled   += HandleJumpCancelled;
+            InputManager.Instance.InputReader.Event_Sprint          += HandleSprint;
+            InputManager.Instance.InputReader.Event_SprintCancelled += HandleSprintCancelled;
         }
 
         private void Update()
@@ -48,8 +44,14 @@ namespace Player
         private void Move()
         {
             if (_movementInputDir == Vector2.zero) return;
-
-            transform.position += new Vector3(_movementInputDir.x, 0, _movementInputDir.y) * _walkSpeed * Time.deltaTime;
+            if (_isSprinting) 
+            {
+                transform.position += new Vector3(_movementInputDir.x, 0, _movementInputDir.y) * _sprintSpeed * Time.deltaTime;
+            }
+            else 
+            {
+                transform.position += new Vector3(_movementInputDir.x, 0, _movementInputDir.y) * _walkSpeed * Time.deltaTime;
+            }
         }
 
         private void Jump()

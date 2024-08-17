@@ -5,7 +5,6 @@ using Managers;
 
 namespace Player
 {
-    [RequireComponent(typeof(Rigidbody))]
     public class PlayerController : MonoBehaviour
     {
         [Header("Components")]

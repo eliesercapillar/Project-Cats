@@ -7,12 +7,15 @@ public class InputReader : ScriptableObject, InputMappings.IGameplayActions, Inp
 {
     private InputMappings _inputMappings;
 
-    // Actions
+    // Gameplay Events
     public event Action<Vector2> Event_Move;
+    public event Action<Vector2> Event_Look;
     public event Action Event_Jump;
     public event Action Event_JumpCancelled;
     public event Action Event_Sprint;
     public event Action Event_SprintCancelled;
+
+    // UI Events
     public event Action Event_Pause;
     public event Action Event_Unpause;
 
@@ -33,17 +36,20 @@ public class InputReader : ScriptableObject, InputMappings.IGameplayActions, Inp
     {
         _inputMappings.Gameplay.Enable();
         _inputMappings.UI.Disable();
+        Cursor.visible = false;
     }
 
     public void SetUI()
     {
         _inputMappings.Gameplay.Disable();
         _inputMappings.UI.Enable();
+        Cursor.visible = true;
     }
 
     #region Gameplay
 
     public void OnMovement(InputAction.CallbackContext context) => Event_Move?.Invoke(context.ReadValue<Vector2>());
+    public void OnLook(InputAction.CallbackContext context)     => Event_Look?.Invoke(context.ReadValue<Vector2>());
 
     public void OnJump(InputAction.CallbackContext context) 
     {
@@ -56,6 +62,7 @@ public class InputReader : ScriptableObject, InputMappings.IGameplayActions, Inp
         if (context.phase == InputActionPhase.Performed) Event_Sprint?.Invoke();
         if (context.phase == InputActionPhase.Canceled) Event_SprintCancelled?.Invoke();
     }
+
 
     #endregion Gameplay
 

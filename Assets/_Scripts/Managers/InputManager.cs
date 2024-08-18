@@ -18,5 +18,10 @@ namespace Managers
             base.Awake();
             if (InputReader == null) _inputReader = new InputReader();
         }
+
+        private void Start()
+        {
+            
+        }
     }
 }

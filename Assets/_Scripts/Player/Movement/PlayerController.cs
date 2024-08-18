@@ -10,6 +10,9 @@ namespace Player
         [Header("Components")]
         [SerializeField] private Rigidbody _rb;
 
+        [Header("Dependencies")]
+        private Camera _camera;
+
         [Header("Movement Properties")]
         [SerializeField] private float _walkSpeed = 5;
         [SerializeField] private float _sprintSpeed = 10;
@@ -17,12 +20,12 @@ namespace Player
 
         // Internal Properties & State Flags
         private Vector2 _movementInputDir;
-        private bool _isJumping;
-        private bool _isSprinting;
+        private bool _isJumping, _isSprinting;
 
         private void Awake()
         {
             if (_rb == null) _rb = GetComponent<Rigidbody>();
+            if (_camera == null) _camera = Camera.main;
         }
 
         private void Start()

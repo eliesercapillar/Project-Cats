@@ -57,6 +57,7 @@ namespace Player
             direction = _camera.transform.forward * direction.z 
                       + _camera.transform.right * direction.x;
             direction.y = 0;
+            direction.Normalize();
 
             float speed = _isSprinting ? _sprintSpeed : _walkSpeed;
 

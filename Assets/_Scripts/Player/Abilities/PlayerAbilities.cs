@@ -1,18 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Managers;
 
-public class PlayerAbilities : MonoBehaviour
+namespace Player
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerAbilities : MonoBehaviour
     {
+        [Header("Interaction Stategies")]
+        [SerializeField] private InteractionStrategy[] _interactions;
+        private int _currentStrategyEquippedIndex = 0;
         
-    }
+        private void Start()
+        {
+            // Subscribe to Gameplay Events
+            InputManager.Instance.InputReader.Event_InteractStarted   += HandleInteractStarted;
+            InputManager.Instance.InputReader.Event_Interact          += HandleInteract;
+            InputManager.Instance.InputReader.Event_InteractCancelled += HandleInteractCanceled;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void HandleInteractStarted()
+        {
+            _interactions[_currentStrategyEquippedIndex].InteractStarted();
+        }
+
+        private void HandleInteract()
+        {
+            _interactions[_currentStrategyEquippedIndex].Interact();
+        }
+
+        private void HandleInteractCanceled()
+        {
+            _interactions[_currentStrategyEquippedIndex].InteractCancelled();
+        }
     }
 }

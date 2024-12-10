@@ -10,6 +10,18 @@ namespace Player
         [Header("Interaction Stategies")]
         [SerializeField] private InteractionStrategy[] _interactions;
         private int _currentStrategyEquippedIndex = 0;
+
+        [Header("Properties")]
+        [SerializeField] private float _maxInteractRange = 3f;
+        private GameObject _currentTarget; // The target the player is currently trying to interact with.
+
+        // Dependencies
+        private Camera _camera;
+
+        private void Awake()
+        {
+            _camera = Camera.main;
+        }
         
         private void Start()
         {
@@ -24,20 +36,41 @@ namespace Player
 
         private void HandleInteractStarted()
         {
-            _interactions[_currentStrategyEquippedIndex].InteractStarted();
+            UpdateCurrentTarget();
+            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].InteractStarted(_currentTarget);
         }
 
         private void HandleInteract()
         {
-            _interactions[_currentStrategyEquippedIndex].Interact();
+            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].Interact(_currentTarget);
         }
 
         private void HandleInteractCanceled()
         {
-            _interactions[_currentStrategyEquippedIndex].InteractCancelled();
+            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].InteractCancelled(_currentTarget);
+            ResetCurrentTarget();
         }
 
         private void HandlePositiveSwitch() => _currentStrategyEquippedIndex = ++_currentStrategyEquippedIndex % _interactions.Length;
         private void HandleNegativeSwitch() => _currentStrategyEquippedIndex = (--_currentStrategyEquippedIndex + _interactions.Length) % _interactions.Length;
+    
+        private void UpdateCurrentTarget()
+        {
+            ResetCurrentTarget();
+
+            Ray ray = new Ray(_camera.transform.position, _camera.transform.forward);
+            RaycastHit[] hits = Physics.RaycastAll(ray, _maxInteractRange);
+
+            foreach (var hit in hits)
+            {
+                if (hit.collider.CompareTag("Interactable"))
+                {
+                    _currentTarget = hit.collider.gameObject;
+                    return;
+                }
+            }
+        }
+
+        private void ResetCurrentTarget() => _currentTarget = null;
     }
 }

@@ -17,7 +17,8 @@ public class InputReader : ScriptableObject, InputMappings.IGameplayActions, Inp
     public event Action Event_InteractStarted;
     public event Action Event_Interact;
     public event Action Event_InteractCancelled;
-
+    public event Action Event_SwitchPositive;
+    public event Action Event_SwitchNegative;
     // UI Events
     public event Action Event_Pause;
     public event Action Event_Unpause;
@@ -70,9 +71,19 @@ public class InputReader : ScriptableObject, InputMappings.IGameplayActions, Inp
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started) Event_InteractCancelled?.Invoke();
+        if (context.phase == InputActionPhase.Started) Event_InteractStarted?.Invoke();
         if (context.phase == InputActionPhase.Performed) Event_Interact?.Invoke();
         if (context.phase == InputActionPhase.Canceled) Event_InteractCancelled?.Invoke();
+    }
+
+    public void OnSwitch(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            if (context.ReadValue<float>() > 0)  Event_SwitchPositive?.Invoke();
+            else                                 Event_SwitchNegative?.Invoke();
+        }
+
     }
 
 

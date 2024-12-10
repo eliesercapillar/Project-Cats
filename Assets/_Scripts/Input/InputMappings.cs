@@ -82,7 +82,7 @@ public partial class @InputMappings: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SwitchAbilities"",
+                    ""name"": ""Switch"",
                     ""type"": ""Value"",
                     ""id"": ""63c1329b-ff67-4a97-b55d-9f4637e20739"",
                     ""expectedControlType"": ""Axis"",
@@ -317,9 +317,9 @@ public partial class @InputMappings: IInputActionCollection2, IDisposable
                     ""id"": ""bc6b4cf9-add6-4957-9851-04da0796b67b"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Invert"",
                     ""groups"": """",
-                    ""action"": ""SwitchAbilities"",
+                    ""action"": ""Switch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -330,29 +330,29 @@ public partial class @InputMappings: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SwitchAbilities"",
+                    ""action"": ""Switch"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""negative"",
                     ""id"": ""d5e7e2e5-5f15-459f-a8d4-3f95b1230f9c"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SwitchAbilities"",
+                    ""action"": ""Switch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""positive"",
                     ""id"": ""f3286545-06aa-42dd-a0d0-450e2448cb4b"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SwitchAbilities"",
+                    ""action"": ""Switch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -408,7 +408,7 @@ public partial class @InputMappings: IInputActionCollection2, IDisposable
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
-        m_Gameplay_SwitchAbilities = m_Gameplay.FindAction("SwitchAbilities", throwIfNotFound: true);
+        m_Gameplay_Switch = m_Gameplay.FindAction("Switch", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Unpause = m_UI.FindAction("Unpause", throwIfNotFound: true);
@@ -479,7 +479,7 @@ public partial class @InputMappings: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Look;
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_Pause;
-    private readonly InputAction m_Gameplay_SwitchAbilities;
+    private readonly InputAction m_Gameplay_Switch;
     public struct GameplayActions
     {
         private @InputMappings m_Wrapper;
@@ -490,7 +490,7 @@ public partial class @InputMappings: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Gameplay_Look;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
-        public InputAction @SwitchAbilities => m_Wrapper.m_Gameplay_SwitchAbilities;
+        public InputAction @Switch => m_Wrapper.m_Gameplay_Switch;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -518,9 +518,9 @@ public partial class @InputMappings: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
-            @SwitchAbilities.started += instance.OnSwitchAbilities;
-            @SwitchAbilities.performed += instance.OnSwitchAbilities;
-            @SwitchAbilities.canceled += instance.OnSwitchAbilities;
+            @Switch.started += instance.OnSwitch;
+            @Switch.performed += instance.OnSwitch;
+            @Switch.canceled += instance.OnSwitch;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -543,9 +543,9 @@ public partial class @InputMappings: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
-            @SwitchAbilities.started -= instance.OnSwitchAbilities;
-            @SwitchAbilities.performed -= instance.OnSwitchAbilities;
-            @SwitchAbilities.canceled -= instance.OnSwitchAbilities;
+            @Switch.started -= instance.OnSwitch;
+            @Switch.performed -= instance.OnSwitch;
+            @Switch.canceled -= instance.OnSwitch;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -617,7 +617,7 @@ public partial class @InputMappings: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnSwitchAbilities(InputAction.CallbackContext context);
+        void OnSwitch(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

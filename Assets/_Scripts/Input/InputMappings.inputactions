@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SwitchAbilities",
+                    "name": "Switch",
                     "type": "Value",
                     "id": "63c1329b-ff67-4a97-b55d-9f4637e20739",
                     "expectedControlType": "Axis",
@@ -295,9 +295,9 @@
                     "id": "bc6b4cf9-add6-4957-9851-04da0796b67b",
                     "path": "<Mouse>/scroll/y",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Invert",
                     "groups": "",
-                    "action": "SwitchAbilities",
+                    "action": "Switch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -308,29 +308,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchAbilities",
+                    "action": "Switch",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "negative",
                     "id": "d5e7e2e5-5f15-459f-a8d4-3f95b1230f9c",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchAbilities",
+                    "action": "Switch",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "positive",
                     "id": "f3286545-06aa-42dd-a0d0-450e2448cb4b",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchAbilities",
+                    "action": "Switch",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

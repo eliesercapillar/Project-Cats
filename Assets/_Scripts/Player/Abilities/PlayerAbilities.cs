@@ -17,6 +17,9 @@ namespace Player
             InputManager.Instance.InputReader.Event_InteractStarted   += HandleInteractStarted;
             InputManager.Instance.InputReader.Event_Interact          += HandleInteract;
             InputManager.Instance.InputReader.Event_InteractCancelled += HandleInteractCanceled;
+
+            InputManager.Instance.InputReader.Event_SwitchPositive += HandlePositiveSwitch;
+            InputManager.Instance.InputReader.Event_SwitchNegative += HandleNegativeSwitch;
         }
 
         private void HandleInteractStarted()
@@ -33,5 +36,8 @@ namespace Player
         {
             _interactions[_currentStrategyEquippedIndex].InteractCancelled();
         }
+
+        private void HandlePositiveSwitch() => _currentStrategyEquippedIndex = ++_currentStrategyEquippedIndex % _interactions.Length;
+        private void HandleNegativeSwitch() => _currentStrategyEquippedIndex = (--_currentStrategyEquippedIndex + _interactions.Length) % _interactions.Length;
     }
 }

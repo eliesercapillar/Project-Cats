@@ -7,30 +7,30 @@ public class MilkInteractionStrategy : InteractionStrategy
     [SerializeField] private float _fillRate = 10f;
     [SerializeField] private float _pourRate = 20f;
 
-    public override void InteractStarted(GameObject target)
+    public override void InteractStarted(GameObject player, GameObject target)
     {
         var milkBowl = target.GetComponent<MilkBowl>();
         if (milkBowl != null) 
         {
-            milkBowl.StartInteract(_pourRate);
+            milkBowl.StartInteract(player, _pourRate);
             return;
         }
 
         var milkSource = target.GetComponent<MilkSource>();
         if (milkSource != null) 
         {
-            milkSource.StartInteract(_fillRate);
+            milkSource.StartInteract(player, _fillRate);
             return;
         }
 
         Debug.Log("Milk Interaction has started.");
     }
 
-    public override void Interact(GameObject target)
+    public override void Interact(GameObject player, GameObject target)
     {
     }
 
-    public override void InteractCancelled(GameObject target)
+    public override void InteractCancelled(GameObject player, GameObject target)
     {
         var milkBowl = target.GetComponent<MilkBowl>();
         if (milkBowl != null) 

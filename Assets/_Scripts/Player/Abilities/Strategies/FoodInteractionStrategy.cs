@@ -3,18 +3,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "FoodInteractionStrategy", menuName = "Scriptable Objects/Interaction Strategies/Food Interaction Strategy")]
 public class FoodInteractionStrategy : InteractionStrategy
 {
-    public override void InteractStarted(GameObject target)
+    public override void InteractStarted(GameObject player, GameObject target)
     {
-        Debug.Log("Food Interaction has started.");
+        throw new System.NotImplementedException();
     }
 
-    public override void Interact(GameObject target)
+    public override void Interact(GameObject player, GameObject target)
     {
-        Debug.Log("Food Interaction is continuing.");
+        throw new System.NotImplementedException();
     }
 
-    public override void InteractCancelled(GameObject target)
+    public override void InteractCancelled(GameObject player, GameObject target)
     {
-        Debug.Log("Food Interaction has ended.");
+        throw new System.NotImplementedException();
     }
 }

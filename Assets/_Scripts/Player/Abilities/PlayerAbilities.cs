@@ -37,17 +37,17 @@ namespace Player
         private void HandleInteractStarted()
         {
             UpdateCurrentTarget();
-            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].InteractStarted(_currentTarget);
+            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].InteractStarted(gameObject, _currentTarget);
         }
 
         private void HandleInteract()
         {
-            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].Interact(_currentTarget);
+            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].Interact(gameObject, _currentTarget);
         }
 
         private void HandleInteractCanceled()
         {
-            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].InteractCancelled(_currentTarget);
+            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].InteractCancelled(gameObject, _currentTarget);
             ResetCurrentTarget();
         }
 

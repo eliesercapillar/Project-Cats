@@ -920,6 +920,7 @@ GameObject:
   - component: {fileID: 1341217348}
   - component: {fileID: 1341217347}
   - component: {fileID: 1341217346}
+  - component: {fileID: 1341217350}
   m_Layer: 0
   m_Name: Milk Resource
   m_TagString: Interactable
@@ -1013,6 +1014,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1341217350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341217345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f6ecf47fc89c24f8dad817dc53f255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1384296456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,6 +1038,7 @@ GameObject:
   - component: {fileID: 1384296457}
   - component: {fileID: 1384296459}
   - component: {fileID: 1384296460}
+  - component: {fileID: 1384296461}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1108,6 +1122,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 645ce5afc94977b4a922aa4f672921e3, type: 2}
   - {fileID: 11400000, guid: 9baa7e17c280c454187a4f436fd5aa09, type: 2}
   _maxInteractRange: 3
+--- !u!114 &1384296461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384296456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2517f269ba56571429f984b78f689bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxMilkCapacity: 100
+  _currentMilk: 0
 --- !u!1 &1408708217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,6 +1247,7 @@ GameObject:
   - component: {fileID: 1674141236}
   - component: {fileID: 1674141235}
   - component: {fileID: 1674141234}
+  - component: {fileID: 1674141238}
   m_Layer: 0
   m_Name: Milk Bowl
   m_TagString: Interactable
@@ -1314,6 +1343,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1674141238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674141233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dd1d35dcf98fca488f2197ae8ec8e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxCapacity: 500
 --- !u!1 &1734829634
 GameObject:
   m_ObjectHideFlags: 0

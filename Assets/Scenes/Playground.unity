@@ -367,6 +367,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pauseMenu: {fileID: 223864950}
+  _playerMilk: {fileID: 1362314140}
+  _milkBowl: {fileID: 713489839}
 --- !u!4 &140859880
 Transform:
   m_ObjectHideFlags: 0

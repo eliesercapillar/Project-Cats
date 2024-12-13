@@ -4,15 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using DesignPatterns;
 
-public class MilkBowl : MonoBehaviour
+public class MilkBowl : Singleton<MilkBowl>
 {
     [Header("Properties")]
     [SerializeField] private float _maxCapacity = 500f;
-    private float _currentAmount = 0f;
+    private Observer<float> _currentMilk = new Observer<float>(0f);
 
     private PlayerResources _currentPlayer = null;
     private bool _interacting = false;
     private float _pourRate = 0f;
+
+    public float MaxCapacity               { get {return _maxCapacity;} }
+    public Observer<float> CurrentMilk     { get {return _currentMilk;} }
 
     private void Update()
     {
@@ -26,7 +29,7 @@ public class MilkBowl : MonoBehaviour
             float delta = _pourRate * Time.deltaTime;
             if(_currentPlayer.TryPourMilk(delta))
             {
-                _currentAmount = Mathf.Clamp(_currentAmount + delta, 0, _maxCapacity);
+                _currentMilk.Value = Mathf.Clamp(_currentMilk.Value + delta, 0, _maxCapacity);
             }
         }
     }

@@ -5,7 +5,7 @@ using DesignPatterns;
 using Player;
 using System;
 
-public class MilkSource : MonoBehaviour
+public class MilkSource : Singleton<MilkSource>
 {
     private PlayerResources _currentPlayer = null;
     private bool _interacting = false;

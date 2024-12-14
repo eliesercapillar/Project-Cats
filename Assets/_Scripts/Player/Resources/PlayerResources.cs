@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DesignPatterns;
 
-public class PlayerResources : Singleton<PlayerResources>
+public class PlayerResources : MonoBehaviour
 {
     [Header("Properties")]
     [SerializeField] private float _maxMilkCapacity = 100f;
@@ -13,6 +13,11 @@ public class PlayerResources : Singleton<PlayerResources>
 
     public float MaxMilkCapacity           { get {return _maxMilkCapacity;} }
     public Observer<float> CurrentMilk     { get {return _currentMilk;} }
+
+    private void Awake()
+    {
+        ServiceLocator.Global.Register(this);
+    }
 
     public bool TryPourMilk(float amount)
     {

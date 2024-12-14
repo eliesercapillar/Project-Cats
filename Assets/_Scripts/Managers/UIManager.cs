@@ -9,8 +9,12 @@ namespace Managers
     public class UIManager : Singleton<UIManager>
     {
         [SerializeField] private GameObject _pauseMenu;
-        [SerializeField] private Slider _playerMilk;
-        [SerializeField] private Slider _milkBowl;
+        [SerializeField] private Slider _playerMilkSlider;
+        [SerializeField] private Slider _milkBowlSlider;
+
+        // Dependencies
+        private PlayerResources _pr;
+        private MilkBowl _milkBowl;
 
         private void Start()
         {
@@ -18,14 +22,17 @@ namespace Managers
             InputManager.Instance.InputReader.Event_Pause   += HandlePause;
             InputManager.Instance.InputReader.Event_Unpause += HandleUnpause;
 
-            MilkBowl.Instance.CurrentMilk.AddListener(HandleMilkUpdate);
-            PlayerResources.Instance.CurrentMilk.AddListener(HandlePlayerMilkUpdate);
+            ServiceLocator.Global.Get(out _pr)
+                                 .Get(out _milkBowl);
+
+            _milkBowl.CurrentMilk.AddListener(HandleMilkUpdate);
+            _pr.CurrentMilk.AddListener(HandlePlayerMilkUpdate);
         }
 
         // Event Handler Methods
         private void HandlePause() => _pauseMenu.SetActive(true);
         private void HandleUnpause() => _pauseMenu.SetActive(false);
-        private void HandleMilkUpdate(float value)       => _milkBowl.value = value / MilkBowl.Instance.MaxCapacity;
-        private void HandlePlayerMilkUpdate(float value) => _playerMilk.value = value / 100f;
+        private void HandleMilkUpdate(float value)       => _milkBowlSlider.value = value / _milkBowl.MaxCapacity;
+        private void HandlePlayerMilkUpdate(float value) => _playerMilkSlider.value = value / 100f;
     }
 }

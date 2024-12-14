@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DesignPatterns;
 
-public class MilkBowl : Singleton<MilkBowl>
+public class MilkBowl : MonoBehaviour
 {
     [Header("Properties")]
     [SerializeField] private float _maxCapacity = 500f;
@@ -16,6 +16,11 @@ public class MilkBowl : Singleton<MilkBowl>
 
     public float MaxCapacity               { get {return _maxCapacity;} }
     public Observer<float> CurrentMilk     { get {return _currentMilk;} }
+
+    private void Awake()
+    {
+        ServiceLocator.Global.Register(this);
+    }
 
     private void Update()
     {

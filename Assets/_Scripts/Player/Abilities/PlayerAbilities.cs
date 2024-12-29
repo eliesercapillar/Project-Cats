@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Managers;
+using UnityEditor;
 
 namespace Player
 {
@@ -10,6 +11,7 @@ namespace Player
         [Header("Interaction Stategies")]
         [SerializeField] private InteractionStrategy[] _interactions;
         private int _currentStrategyEquippedIndex = 0;
+        private InteractionStrategy _currentStrategy = null;
 
         [Header("Properties")]
         [SerializeField] private float _maxInteractRange = 3f;
@@ -37,17 +39,20 @@ namespace Player
         private void HandleInteractStarted()
         {
             UpdateCurrentTarget();
-            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].InteractStarted(gameObject, _currentTarget);
+            if (_currentTarget != null) _currentStrategy.InteractStarted(gameObject, _currentTarget);
+            //if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].InteractStarted(gameObject, _currentTarget);
         }
 
         private void HandleInteract()
         {
-            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].Interact(gameObject, _currentTarget);
+            if (_currentTarget != null) _currentStrategy.Interact(gameObject, _currentTarget);
+            //if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].Interact(gameObject, _currentTarget);
         }
 
         private void HandleInteractCanceled()
         {
-            if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].InteractCancelled(gameObject, _currentTarget);
+            if (_currentTarget != null) _currentStrategy.InteractCancelled(gameObject, _currentTarget);
+            //if (_currentTarget != null) _interactions[_currentStrategyEquippedIndex].InteractCancelled(gameObject, _currentTarget);
             ResetCurrentTarget();
         }
 
@@ -63,10 +68,20 @@ namespace Player
 
             foreach (var hit in hits)
             {
-                if (hit.collider.CompareTag("Interactable"))
+                string tag = hit.collider.tag;
+
+                switch (tag)
                 {
-                    _currentTarget = hit.collider.gameObject;
-                    return;
+                    case "Interactable":
+                        _currentTarget = hit.collider.gameObject;
+                        break;
+                    case "Tool":
+                        Debug.Log($"Retrieving Strategy for the Tool: {hit.collider.gameObject.name}");
+                        _currentStrategy = hit.collider.GetComponent<ITool>().GetStrategy();
+                        break;  
+                    default:
+                        Debug.Log("Not looking at a valid target.");
+                        break;
                 }
             }
         }

@@ -7,6 +7,22 @@ public class WaterJug : MonoBehaviour, ITool
 {
     [SerializeField] private InteractionStrategy _strategy;
 
+    [Header("Properties")]
+    [SerializeField] private int _maxUsers = 1;
+    [SerializeField] private int _maxUses = 5; // Not necessary?
+
+    private int _currentUsers = 0;
+
+    private MeshRenderer _mr;
+    private MeshCollider _mc;
+
+    private void Awake()
+    {
+        _mr = GetComponent<MeshRenderer>();
+        _mc = GetComponent<MeshCollider>();
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,5 +38,14 @@ public class WaterJug : MonoBehaviour, ITool
         
     }
 
-    public InteractionStrategy GetStrategy() => _strategy;
+    public InteractionStrategy GetStrategy() 
+    {
+        if (_currentUsers >= _maxUsers) return null;
+        
+        _currentUsers++;
+        _mr.enabled = false;
+        _mc.enabled = false;
+
+        return _strategy;
+    }
 }

@@ -14,7 +14,11 @@ public class InputReader : ScriptableObject, InputMappings.IGameplayActions, Inp
     public event Action Event_JumpCancelled;
     public event Action Event_Sprint;
     public event Action Event_SprintCancelled;
-
+    public event Action Event_InteractStarted;
+    public event Action Event_Interact;
+    public event Action Event_InteractCancelled;
+    public event Action Event_SwitchPositive;
+    public event Action Event_SwitchNegative;
     // UI Events
     public event Action Event_Pause;
     public event Action Event_Unpause;
@@ -37,6 +41,7 @@ public class InputReader : ScriptableObject, InputMappings.IGameplayActions, Inp
         _inputMappings.Gameplay.Enable();
         _inputMappings.UI.Disable();
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void SetUI()
@@ -44,6 +49,7 @@ public class InputReader : ScriptableObject, InputMappings.IGameplayActions, Inp
         _inputMappings.Gameplay.Disable();
         _inputMappings.UI.Enable();
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     #region Gameplay
@@ -61,6 +67,23 @@ public class InputReader : ScriptableObject, InputMappings.IGameplayActions, Inp
     {
         if (context.phase == InputActionPhase.Performed) Event_Sprint?.Invoke();
         if (context.phase == InputActionPhase.Canceled) Event_SprintCancelled?.Invoke();
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started) Event_InteractStarted?.Invoke();
+        if (context.phase == InputActionPhase.Performed) Event_Interact?.Invoke();
+        if (context.phase == InputActionPhase.Canceled) Event_InteractCancelled?.Invoke();
+    }
+
+    public void OnSwitch(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            if (context.ReadValue<float>() > 0)  Event_SwitchPositive?.Invoke();
+            else                                 Event_SwitchNegative?.Invoke();
+        }
+
     }
 
 
